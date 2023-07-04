@@ -58,20 +58,22 @@ export class EventQueue {
    * Send the queue to the server
    */
   async flush() {
-    const sendQueue = this.queue;
+    const sendQueue = [...this.queue];
     this.stopFlusTimer();
     this.queue = [];
 
     if (!this.user.id) {
-      console.warn("Greenhouse: No user created");
+      console.warn('Greenhouse: No user created');
       return;
     }
-    const payload = {
-      t: Date.now(),
-      u: this.user.id,
-      e: sendQueue,
-    };
-    await this.api.send(`/event`, payload);
+    if (sendQueue.length) {
+      const payload = {
+        t: Date.now(),
+        u: this.user.id,
+        e: sendQueue,
+      };
+      await this.api.send(`/event`, payload);
+    }
   }
 
   /**
