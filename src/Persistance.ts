@@ -86,7 +86,7 @@ export class Persistance {
       } else if (storage === "cookie") {
         const options = this.options.persist?.cookie ?? {};
 
-        let cookieSettings = [];
+        const cookieSettings = [];
         const expiresDays =
           options.expires ?? GreenhouseOptionDefaults.persist.cookie.expires;
         if (expiresDays) {
